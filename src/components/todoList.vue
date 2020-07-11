@@ -5,8 +5,9 @@
     </div>
     <div v-for="(todo,index) in todos" :key="todo.name" class="item">
       <div >
-        <div v-if="!todo.editing" v-on:dblclick="editTodo(todo)">{{todo.name}}</div>
-        <input v-else type="text" v-model="todo.name" name="" class="item-edit" v-on:blur="doneEdit(todo)" v-on:keyup.enter="doneEdit(todo)">
+        <!-- <div class="item-edit" v-if="!todo.editing" contenteditable="" v-on:keyup.enter="doneEdit(todo)" v-on:keyup.esc="cancelEdit(todo)">{{todo.name}}</div> -->
+        <div v-if="!todo.editing" v-on:click="editTodo(todo)">{{todo.name}}</div>
+        <input v-else type="text" v-model="todo.name" class="item-edit" v-on:blur="doneEdit(todo)" v-on:keyup.enter="doneEdit(todo)" v-on:keyup.esc="cancelEdit(todo)">
       </div>
       <div class="delete" type="button" name="button" v-on:click="removeItem(index)">&times;</div>
 
@@ -24,11 +25,11 @@ export default {
   data(){
     return{
       newTodo: "",
-      isDone: false,
+      beforeCacheEdit: "",
       todos:[
         {
           'name': "clean kitchen",
-          'isDone': true,
+          'isDone': false,
           'editing': false
         },
         {
@@ -54,7 +55,12 @@ export default {
     },
 
     editTodo: function(todo){
+      this.beforeCacheEdit = todo.name
       todo.editing = true
+    },
+    cancelEdit: function(todo){
+      todo.name = this.beforeCacheEdit
+      todo.editing = false
     },
 
     doneEdit: function(todo){
@@ -75,6 +81,8 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+
 .item{
   margin-top: 10px;
   padding: 5px;
@@ -82,6 +90,7 @@ export default {
 .item-edit{
   margin-top: 10px;
   padding: 5px;
+
 }
 
 .delete {
