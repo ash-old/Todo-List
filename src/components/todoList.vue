@@ -7,7 +7,7 @@
       <div >
         <!-- <div class="item-edit" v-if="!todo.editing" contenteditable="" v-on:keyup.enter="doneEdit(todo)" v-on:keyup.esc="cancelEdit(todo)">{{todo.name}}</div> -->
         <div v-if="!todo.editing" v-on:click="editTodo(todo)">{{todo.name}}</div>
-        <input v-else type="text" v-model="todo.name" class="item-edit" v-on:blur="doneEdit(todo)" v-on:keyup.enter="doneEdit(todo)" v-on:keyup.esc="cancelEdit(todo)">
+        <input v-else type="text" v-model="todo.name" class="item-edit" v-on:blur="doneEdit(todo)" v-on:keyup.enter="doneEdit(todo)" >
       </div>
       <div class="delete" type="button" name="button" v-on:click="removeItem(index)">&times;</div>
 
@@ -25,7 +25,6 @@ export default {
   data(){
     return{
       newTodo: "",
-      beforeCacheEdit: "",
       todos:[
         {
           'name': "clean kitchen",
@@ -55,11 +54,9 @@ export default {
     },
 
     editTodo: function(todo){
-      this.beforeCacheEdit = todo.name
       todo.editing = true
     },
     cancelEdit: function(todo){
-      todo.name = this.beforeCacheEdit
       todo.editing = false
     },
 
