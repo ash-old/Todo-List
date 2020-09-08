@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <img alt="todo logo" src="./assets/logo.png">
+  <div id="app" class="container">
+    <img alt="todo logo" src="./assets/logo.png" class="logo">
     <todo-list/>
   </div>
 </template>
@@ -23,12 +23,23 @@ export default {
 </script>
 
 <style>
+
+* {
+  box-sizing:border-box;
+}
+
+.container {
+  max-width: 600px;
+  margin:  auto;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
   margin-top: 60px;
+  /* font-size: 15px; */
 }
 </style>
