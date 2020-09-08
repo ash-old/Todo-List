@@ -127,6 +127,9 @@ export default {
     },
     checkAllTodos: function(){
       this.todos.forEach((todo) => todo.isDone = event.target.checked);
+    },
+    clearCompleted: function(){
+      this.todos = this.todos.filter(todo => !todo.isDone)
     }
   }
 };
