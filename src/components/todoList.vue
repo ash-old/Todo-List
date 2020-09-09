@@ -2,8 +2,8 @@
 
     <div v-on:submit.prevent class="">
       <input v-model="newTodo" v-on:keyup.enter="addItem" type="text" name="todoList" placeholder="todo item..." class="todo-input">
-
-    <div v-for="(todo,index) in todosFiltered" :key="todo.index" class="todo-item">
+<transition-group name="fade" enter-active-class="animate__animated animate__fadeInUp" leave-active-class="animate__animated animate__fadeOutDown">
+    <div v-for="(todo,index) in todosFiltered" :key="todo.id" class="todo-item">
       <div class="item-list">
         <input type="checkbox" v-model="todo.isDone" >
         <!-- <div class="item-edit" v-if="!todo.editing" contenteditable="" v-on:keyup.enter="doneEdit(todo)" v-on:keyup.esc="cancelEdit(todo)">{{todo.name}}</div> -->
@@ -13,7 +13,7 @@
       <div class="delete" type="button" name="button" v-on:click="removeItem(index)">&times;
       </div>
     </div>
-
+</transition-group>
     <div class="extra-container">
       <div>
         <label><input type="checkbox" :checked="!anyRemaining" @change="checkAllTodos"> Check all</label>
@@ -24,7 +24,9 @@
           <button type="button" :class="{ active: filter == 'active'}" @click="filter = 'active'">Active</button>
           <button type="button" :class="{ active: filter == 'completed'}" @click="filter = 'completed'">Completed</button>
           <span>
+            <transition name="fade">
             <button v-if="showCompletedButton" :class="{ active: filter == 'clear'}" @click="clearCompleted">Clear Completed</button>
+            </transition>
           </span>
 
         </div>
@@ -142,6 +144,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
 .container{
   /* display: flex;
   align-content: center; */
@@ -211,6 +214,7 @@ export default {
   margin-bottom: 14px;
 }
 
+/* button */
 button {
   font-size: 14px;
   background-color: white;
@@ -220,4 +224,13 @@ button {
 .active {
   background:lightgreen;
 }
+
+/* transition */
+.fade-enter-active, .fade-leave-active{
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
 </style>
