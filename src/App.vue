@@ -23,13 +23,16 @@ export default {
 </script>
 
 <style>
+.logo{
+  justify-content: center;
+}
 
 * {
   box-sizing:border-box;
 }
 
 .container {
-  max-width: 600px;
+  max-width: 500px;
   margin:  auto;
 }
 

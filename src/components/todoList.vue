@@ -1,19 +1,21 @@
 <template lang="html">
 
-    <div v-on:submit.prevent class="">
-      <input v-model="newTodo" v-on:keyup.enter="addItem" type="text" name="todoList" placeholder="todo item..." class="todo-input">
-<transition-group name="fade" enter-active-class="animate__animated animate__fadeInUp" leave-active-class="animate__animated animate__fadeOutDown">
-    <div v-for="(todo,index) in todosFiltered" :key="todo.id" class="todo-item">
-      <div class="item-list">
-        <input type="checkbox" v-model="todo.isDone" >
-        <!-- <div class="item-edit" v-if="!todo.editing" contenteditable="" v-on:keyup.enter="doneEdit(todo)" v-on:keyup.esc="cancelEdit(todo)">{{todo.name}}</div> -->
-        <div v-if="!todo.editing" :class="{checked : todo.isDone}" v-on:click="editTodo(todo)" class="todo-label">{{todo.name}}</div>
-        <input v-else type="text" v-model="todo.name" class="item-edit" v-on:blur="doneEdit(todo)" v-on:keyup.enter="doneEdit(todo)" v-on:keyup.esc="cancelEdit(todo)" v-focus>
-      </div>
-      <div class="delete" type="button" name="button" v-on:click="removeItem(index)">&times;
-      </div>
-    </div>
-</transition-group>
+  <div v-on:submit.prevent class="">
+    <input v-model="newTodo" v-on:keyup.enter="addItem" type="text" name="todoList" placeholder="todo item..." class="todo-input">
+    <transition-group name="fade" enter-active-class="animate__animated animate__fadeInUp" leave-active-class="animate__animated animate__fadeOutDown">
+      <todo-item v-for="(todo, index) in todosFiltered" :key="todo.id" :todo="todo" :index="index">
+
+
+        <!-- <div class="item-list">
+          <input type="checkbox" v-model="todo.isDone" >
+          <div class="item-edit" v-if="!todo.editing" contenteditable="" v-on:keyup.enter="doneEdit(todo)" v-on:keyup.esc="cancelEdit(todo)">{{todo.name}}</div>
+          <div v-if="!todo.editing" :class="{checked : todo.isDone}" v-on:click="editTodo(todo)" class="todo-label">{{todo.name}}</div>
+          <input v-else type="text" v-model="todo.name" class="item-edit" v-on:blur="doneEdit(todo)" v-on:keyup.enter="doneEdit(todo)" v-on:keyup.esc="cancelEdit(todo)" v-focus>
+        </div>
+        <div class="delete" type="button" name="button" v-on:click="removeItem(index)">&times;
+        </div> -->
+      </todo-item>
+    </transition-group>
     <div class="extra-container">
       <div>
         <label><input type="checkbox" :checked="!anyRemaining" @change="checkAllTodos"> Check all</label>
@@ -38,8 +40,13 @@
 </template>
 
 <script>
+import todoItem from './todoItem'
+
 export default {
   name: 'todo-list',
+  components: {
+    'todo-item': todoItem
+  },
   // props:['todos'],
   data(){
     return{
@@ -166,14 +173,15 @@ export default {
   color: grey;
 }
 
-.todo-item{
+/* .todo-item{
   margin-bottom: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* margin-top: 10px;
-  padding: 5px; */
-}
+  animation-duration: 0.3s;
+  margin-top: 10px;
+  padding: 5px;
+} */
 
 .todo-label{
   padding: 0px;
@@ -181,10 +189,10 @@ export default {
   margin-left: 12px;
 }
 
-.item-list{
+/* .item-list{
   display: flex;
   justify-content: center;
-}
+} */
 
 .item-edit{
   margin-top: 10px;
