@@ -11,6 +11,8 @@
 </template>
 
 <script>
+
+
 export default {
   name: 'todo-item',
   props: {
@@ -54,7 +56,7 @@ export default {
         }
       }
     },
-    
+
   methods: {
     removeItem(index){
       this.$emit('removedItem', index)
@@ -69,8 +71,6 @@ export default {
     },
     doneEdit: function(){
       if(this.name.trim() == ''){
-      // return this.beforeEditCache
-      // todo.editing = false
       this.title = this.beforeEditCache
       }
       this.editing = false
@@ -90,31 +90,5 @@ export default {
 
 <style lang="css" scoped>
 
-/* .todo-item{
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  animation-duration: 0.3s;
-  margin-top: 10px;
-  padding: 5px;
-}
 
-.item-list{
-  display: flex;
-  justify-content: center;
-}
-
-.delete {
-  cursor: pointer;
-  margin-left: 14px;
-  &:hover{
-    color: black;
-  }
-}
-
-.checked{
-  text-decoration: line-through;
-  color: grey;
-} */
 </style>

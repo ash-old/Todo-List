@@ -12,7 +12,6 @@ export default {
   name: 'App',
   data(){
     return{
-      // newTodo: "",
 
     }
   },
@@ -24,7 +23,8 @@ export default {
 
 <style>
 .logo{
-  justify-content: center;
+  margin: 10px auto 20px;
+    display: block;
 }
 
 * {
@@ -40,9 +40,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
   color: #2c3e50;
   margin-top: 60px;
-  /* font-size: 15px; */
 }
 </style>

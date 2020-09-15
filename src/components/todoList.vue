@@ -121,11 +121,6 @@ export default {
 
 <style lang="css">
 
-.container{
-  /* display: flex;
-  align-content: center; */
-}
-
 .todo-input {
   width:100%;
   padding: 10px 18px;
