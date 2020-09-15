@@ -3,17 +3,7 @@
   <div v-on:submit.prevent class="">
     <input v-model="newTodo" v-on:keyup.enter="addItem" type="text" name="todoList" placeholder="todo item..." class="todo-input">
     <transition-group name="fade" enter-active-class="animate__animated animate__fadeInUp" leave-active-class="animate__animated animate__fadeOutDown">
-      <todo-item v-for="(todo, index) in todosFiltered" :key="todo.id" :todo="todo" :index="index">
-
-
-        <!-- <div class="item-list">
-          <input type="checkbox" v-model="todo.isDone" >
-          <div class="item-edit" v-if="!todo.editing" contenteditable="" v-on:keyup.enter="doneEdit(todo)" v-on:keyup.esc="cancelEdit(todo)">{{todo.name}}</div>
-          <div v-if="!todo.editing" :class="{checked : todo.isDone}" v-on:click="editTodo(todo)" class="todo-label">{{todo.name}}</div>
-          <input v-else type="text" v-model="todo.name" class="item-edit" v-on:blur="doneEdit(todo)" v-on:keyup.enter="doneEdit(todo)" v-on:keyup.esc="cancelEdit(todo)" v-focus>
-        </div>
-        <div class="delete" type="button" name="button" v-on:click="removeItem(index)">&times;
-        </div> -->
+      <todo-item v-for="(todo, index) in todosFiltered" :key="todo.id" :todo="todo" :index="index" :checkAll="!anyRemaining" @removedItem="removeItem" @finishedEdit="finishedEdit">
       </todo-item>
     </transition-group>
     <div class="extra-container">
@@ -93,14 +83,6 @@ export default {
     }
   },
 
-  directives: {
-    focus: {
-      inserted: function (el) {
-        el.focus()
-      }
-    }
-  },
-
   methods: {
     addItem: function(){
       if(this.newTodo.trim().length == 0){
@@ -115,22 +97,6 @@ export default {
       this.newTodo = ""
       this.idForTodo++
     },
-    editTodo: function(todo){
-      this.beforeEditCache = todo.name
-      todo.editing = true
-    },
-    cancelEdit: function(todo){
-      todo.name = this.beforeEditCache
-      todo.editing = false
-    },
-    doneEdit: function(todo){
-      if(todo.name.trim() == ''){
-      // return this.beforeEditCache
-      // todo.editing = false
-      todo.title = this.beforeEditCache
-      }
-      todo.editing = false
-    },
     removeItem: function(index){
       this.todos.splice(index, 1);
     },
@@ -139,6 +105,9 @@ export default {
     },
     clearCompleted: function(){
       this.todos = this.todos.filter(todo => !todo.isDone)
+    },
+    finishedEdit: function(data){
+      this.todos.splice(data.index, 1, data.todo)
     }
   }
 };
@@ -150,7 +119,7 @@ export default {
 
 </script>
 
-<style lang="css" scoped>
+<style lang="css">
 
 .container{
   /* display: flex;
@@ -173,7 +142,7 @@ export default {
   color: grey;
 }
 
-/* .todo-item{
+.todo-item{
   margin-bottom: 12px;
   display: flex;
   align-items: center;
@@ -181,7 +150,7 @@ export default {
   animation-duration: 0.3s;
   margin-top: 10px;
   padding: 5px;
-} */
+}
 
 .todo-label{
   padding: 0px;
@@ -189,10 +158,10 @@ export default {
   margin-left: 12px;
 }
 
-/* .item-list{
+.item-list{
   display: flex;
   justify-content: center;
-} */
+}
 
 .item-edit{
   margin-top: 10px;
